@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple ERP</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Loading / no-access screen -->
+  <div class="screen" id="loading">
+    <div class="auth-card" style="text-align:center">
+      <div class="brand-logo" style="margin:0 auto 16px">E</div>
+      <div class="spinner"></div>
+      <p id="loadingMsg" class="auth-sub">Connecting…</p>
+      <div id="loadingActions" hidden style="display:flex;gap:8px;justify-content:center;margin-top:14px">
+        <button class="btn" id="loadingRetry">Try again</button>
+        <button class="btn" id="loadingSignOut">Sign out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign in / sign up -->
+  <div class="screen" id="auth" hidden>
+    <div class="auth-card">
+      <div class="brand-logo" style="margin-bottom:18px">E</div>
+      <h2 id="authTitle">Sign in to your ERP</h2>
+      <p class="auth-sub" id="authSub">Use your work email and password.</p>
+      <form id="authForm" class="auth-form">
+        <div class="field"><label>Email</label><input type="email" name="email" required autocomplete="email" placeholder="you@company.com" /></div>
+        <div class="field"><label>Password</label><input type="password" name="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters" /></div>
+        <div class="auth-msg" id="authMsg"></div>
+        <button class="btn primary" type="submit" id="authSubmit">Sign in</button>
+      </form>
+      <div class="auth-switch" id="authSwitch"></div>
+    </div>
+  </div>
+
+  <div class="app" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo" id="brandLogo">E</div>
+        <div>
+          <div class="brand-name" id="brandName">My Company</div>
+          <div class="brand-sub">ERP Suite</div>
+        </div>
+      </div>
+      <nav class="nav" id="nav"></nav>
+      <div class="sidebar-foot">Connected to Supabase</div>
+    </aside>
+    <div class="backdrop-nav" id="navBackdrop"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"></button>
+        <div>
+          <h1 id="pageTitle">Dashboard</h1>
+          <div class="crumb" id="pageSub"></div>
+        </div>
+        <div class="topbar-right">
+          <button class="badge sync b-green" id="sync" data-state="saved">All changes saved</button>
+          <div class="today" id="today"></div>
+          <div class="avatar" id="userAvatar">A</div>
+          <button class="btn sm" id="signOutBtn">Sign out</button>
+        </div>
+      </header>
+      <section class="content" id="content"></section>
+    </main>
+  </div>
+
+  <div class="modal-wrap" id="modalWrap">
+    <div class="modal" id="modal"></div>
+  </div>
+  <div class="toasts" id="toasts"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
