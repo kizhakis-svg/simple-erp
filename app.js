@@ -1063,7 +1063,7 @@ $('#authForm').addEventListener('submit', async (e) => {
   btn.disabled = true; btn.textContent = 'Please wait…';
   try {
     if (authMode === 'signup') {
-      const { data, error } = await sb.auth.signUp({ email, password });
+      const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: location.origin + location.pathname } });
       if (error) throw error;
       if (!data.session) return showAuth('signin', 'Account created. Check your email to confirm it, then sign in.');
     } else {
@@ -1094,6 +1094,8 @@ async function boot() {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) return showAuth('signin');
   currentUser = session.user;
+  // Clean the login tokens out of the address bar after an email-confirmation redirect
+  if (/access_token|error_description/.test(location.hash)) history.replaceState(null, '', location.pathname + '#/dashboard');
   showLoading('Loading your data…');
   const mem = await sb.rpc('is_member');
   if (mem.error) return showLoading(`Could not reach the database: ${mem.error.message}`, true);
